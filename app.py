@@ -73,7 +73,6 @@ async def new_user(request):
             description: Successful operation. Return "User created with name  $request.query['name'] successfully" text
         "500":
             description: invalid HTTP Method. Returns Internal server error.
-    
     """
     try:
         print(flag)
