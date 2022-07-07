@@ -28,6 +28,29 @@ async def login(request):
         print(str(e))
         response_obj={"message":str(e)}
         return web.Response(text=json.dumps(response_obj),status=500)
+    
+async def addUser(request):
+    try:
+        global userId;
+        name = request.query["name"]
+        global users
+        users[userId] = name;
+        userId = userId+1;
+        response_obj = {"Message":"User added successfully"}
+        return web.Response(text=json.dumps(response_obj),status=200)
+    except Exception as e:
+        print(str(e))
+        response_obj = {"message":str(e)}
+        return web.Response(text=json.dumps(response_obj),status=500)
+    
+async def getUser(request):
+    try:
+        global users;
+        return web.Response(text=json.dumps(users),status=200)
+    except Exception as e:
+        print(str(e))
+        response_obj = {"Message":str(e)}
+        return web.Response(text=json.dumps(response_obj),status=500)
 
 async def init():
 
@@ -48,18 +71,21 @@ async def init():
         global token
         if token == headerToken:
             user = {'uuid': 'fake-uuid'}
-        return user
-
+            return user
+        else:
+            response_obj={"Message":"Invalid token"}
+            return web.Response(text=json.dumps(response_obj),status=400)
     app = web.Application(middlewares=[
     token_auth_middleware(
         user_loader=user_loader,
         # You can use regular expressions here
         exclude_routes=('/login', r'/login/\w+/info'),
-        exclude_methods=('POST',),
     ),
 ])
     app.router.add_get('/', example_resource)
     app.router.add_post('/login',login)
+    app.router.add_post('/user',addUser)
+    app.router.add_get('/user',getUser)
     
     setup_swagger(app, swagger_url="/api/v1/doc", ui_version=2)  # <-- NEW Doc URI
 
@@ -67,7 +93,8 @@ async def init():
 
 
 users={}
-
+userId = 0
+token=""
 
 #1. Add users
 #2. Get users
