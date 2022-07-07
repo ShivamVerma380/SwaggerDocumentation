@@ -8,6 +8,7 @@ async def example_resource(request):
     return web.json_response(request['user'])
 
 
+
 async def login(request):
     try:
         name = request.query["name"];
@@ -59,10 +60,17 @@ async def init():
 ])
     app.router.add_get('/', example_resource)
     app.router.add_post('/login',login)
+    
     setup_swagger(app, swagger_url="/api/v1/doc", ui_version=2)  # <-- NEW Doc URI
 
     return app
 
+
+users={}
+
+
+#1. Add users
+#2. Get users
 
 
 if __name__ == '__main__':
