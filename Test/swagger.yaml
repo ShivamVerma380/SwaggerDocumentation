@@ -17,6 +17,10 @@ parameters:
         type:
           - "string"
           - "null"
+      email:
+        type:
+          - "string"
+          - "null"
 responses:
   "201":
     description: successful operation

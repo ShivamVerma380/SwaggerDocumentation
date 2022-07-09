@@ -22,10 +22,11 @@ async def addUser(request):
         # print(await request.read())
         print(data.get("name"))
         name = data.get("name")
+        email = data.get("email")
         # name = request.query["name"]
         global users
         global userId
-        users[userId] = name
+        users[userId] = {"email":email,"name":name}
         userId=userId+1
         response_obj={"Message":"User "+name+" created successfully"}
         return web.Response(text=json.dumps(response_obj),status=200)
@@ -38,10 +39,19 @@ async def addUser(request):
 async def getUser(request):
     try:
         global users;
-        return web.Response(text=json.dumps(users),status=200)
+        return web.Response(text=str(users),status=200)
     except Exception as e:
         print(str(e))
-        response_obj={"Message",str(e)}
+        response_obj={"Message":str(e)}
+        return web.Response(text=json.dumps(response_obj),status=500)
+
+async def updateUser(request):
+    try:
+        global users;
+        
+    except Exception as e:
+        print(str(e))
+        response_obj={"Message":str(e)}
         return web.Response(text=json.dumps(response_obj),status=500)
 
 
