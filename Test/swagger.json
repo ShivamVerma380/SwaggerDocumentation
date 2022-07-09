@@ -1,0 +1,43 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "version":"2.0.0",
+        "title":"user"
+    },
+    "paths":{
+        "/add-user":{
+            "post":{
+                "tags":[
+                    "Add User"
+                ],
+                "summary":"This Api allows to create a user",
+                "responses":{
+                    "200":{
+                        "description":"OK: User created successfully"
+                    },
+                    "500":{
+                        "description":"Internal Server Error. When resource is not available"
+                    }
+                },"parameters":{
+                    "description":"Add User request",
+                    "required":"true",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "required":"fa;se",
+                                "properties":{
+                                    "name":{
+                                        "type":"String",
+                                        "example":""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

@@ -4,12 +4,25 @@ import requests,json,secrets
 from aiohttp_tokenauth import token_auth_middleware
 
 from aiohttp_swagger import *
-async def example_resource(request):
-    return web.json_response(request['user'])
+# async def example_resource(request):
+#     return web.json_response(request['user'])
 
 
 
 async def login(request):
+    """
+    ---
+    description: This end-point will allow you to register user. Remember, you need to verify the email before registering.
+    tags:
+    - Register api
+    products:
+    - text/json
+    responses:
+        "200":
+            description: Successful operation. Return "User created with name  $request.query['name'] successfully" text
+        "500":
+            description: invalid HTTP Method. Returns Internal server error.
+    """
     try:
         name = request.query["name"];
         password = request.query["password"];
@@ -29,6 +42,7 @@ async def login(request):
         response_obj={"message":str(e)}
         return web.Response(text=json.dumps(response_obj),status=500)
     
+@swagger_path("swagger.json")    
 async def addUser(request):
     try:
         global userId;
@@ -72,22 +86,19 @@ async def init():
         if token == headerToken:
             user = {'uuid': 'fake-uuid'}
             return user
-        else:
-            response_obj={"Message":"Invalid token"}
-            return web.Response(text=json.dumps(response_obj),status=400)
     app = web.Application(middlewares=[
     token_auth_middleware(
         user_loader=user_loader,
         # You can use regular expressions here
-        exclude_routes=('/login', r'/login/\w+/info'),
+        exclude_routes=('/login', r'/login/\w+/info','/api/v1/doc'),
     ),
-])
-    app.router.add_get('/', example_resource)
+    ])
+    # app.router.add_get('/', example_resource)
     app.router.add_post('/login',login)
     app.router.add_post('/user',addUser)
     app.router.add_get('/user',getUser)
     
-    setup_swagger(app, swagger_url="/api/v1/doc", ui_version=2)  # <-- NEW Doc URI
+    # setup_swagger(app, swagger_url="/api/v1/doc", ui_version=2)  # <-- NEW Doc URI
 
     return app
 

@@ -1,0 +1,32 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+      "title": "JSONPlaceholder",
+      "description": "Fake Online REST API for Testing and Prototyping",
+      "version": "0.0.1"
+    },
+    "components":{
+        "schemas":{
+            "id":{
+                "properties":{
+                    "uuid":{
+                        "type":"string"
+                    }
+                }
+            },
+            "bookRequestPostBody":{
+                "type":"object",
+                "properties":{
+                    "title":{
+                        "type":"string",
+                        "format":"string"
+                    },
+                    "email":{
+                        "type":"string",
+                        "format":"email"
+                    }
+                }
+            }
+        }
+    }
+}

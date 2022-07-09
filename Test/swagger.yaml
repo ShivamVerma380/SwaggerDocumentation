@@ -1,0 +1,24 @@
+tags:
+- user
+summary: Create user
+description: This can only be done by the logged in user.
+operationId: examples.api.api.createUser
+produces:
+- application/json
+parameters:
+- in: body
+  name: body
+  description: Created user object
+  required: false
+  schema:
+    type: object
+    properties:
+      name:
+        type:
+          - "string"
+          - "null"
+responses:
+  "201":
+    description: successful operation
+  "500":
+    description: internal server error

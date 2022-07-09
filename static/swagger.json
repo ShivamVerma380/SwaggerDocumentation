@@ -1,0 +1,75 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+      "title": "JSONPlaceholder",
+      "description": "Fake Online REST API for Testing and Prototyping",
+      "version": "0.0.1"
+    },
+    "components":{
+        "schemas":{
+            "name":{
+                "type":"string"
+            },
+            "password":{
+                "type":"string"
+            },
+            "confirm_password":{
+                "type":"string"
+            },
+            "loginuser":{
+                "type":"object",
+                "properties":{
+                    "name":{
+                        "type":"string",
+                        "format":"string"
+                    },
+                    "password":{
+                        "type":"string",
+                        "format":"string"
+                    }
+                }
+            }
+            
+        }
+    },
+    "server":[
+        {
+            "urls":"/"
+        }
+    ],
+    "tags":[
+        {
+            "name":"Home",
+            "description":"Home page"
+        },
+        {
+            "name":"Login",
+            "description":"Login page"
+        },
+        {
+            "name":"Register",
+            "description":"Register page"
+        }
+    ],
+    "paths":{
+        "/":{
+            "get":{
+                "tags":[
+                    "Home"
+                ],
+                "summary":"Home Page",
+                "responses":{
+                    "200":{
+                        "description":"OK",
+                        "schema":{
+                            "$ref":"#/components/schemas/name"
+                        }
+                    }
+                }
+
+            }
+        }
+
+    
+}
+}
