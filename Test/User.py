@@ -44,10 +44,25 @@ async def getUser(request):
         print(str(e))
         response_obj={"Message":str(e)}
         return web.Response(text=json.dumps(response_obj),status=500)
+    
 
-async def updateUser(request):
+@swagger_path("swagger.yaml")
+async def deleteUser(request):
     try:
         global users;
+        data = await request.json()
+        email = data.get("email")
+        flag = True
+        for i in users:
+            print(users[i].get("email"))
+            if users[i].get("email") == email:
+                del users[i]
+                flag = False
+                response_obj={"Message":"User with email " + email + " deleted successfully"}
+                return web.Response(text=json.dumps(response_obj),status=200)
+        if flag==True:
+            response_obj={"Message":"User with email "+email + " not found"}
+            return web.Response(text=json.dumps(response_obj),status=404)
         
     except Exception as e:
         print(str(e))
@@ -57,8 +72,9 @@ async def updateUser(request):
 
 
 app = web.Application()
-app.router.add_post("/add-user",addUser)
-app.router.add_get("/get-user",getUser)
+app.router.add_post("/user",addUser)
+app.router.add_get("/user",getUser)
+app.router.add_delete("/user",deleteUser)
 setup_swagger(app, swagger_url="/api/v1/doc", ui_version=2)  # <-- NEW Doc URI
 
 web.run_app(app, host="127.0.0.1")

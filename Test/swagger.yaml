@@ -26,3 +26,5 @@ responses:
     description: successful operation
   "500":
     description: internal server error
+  "404":
+    description: not found
